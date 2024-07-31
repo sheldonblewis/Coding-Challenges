@@ -11,6 +11,8 @@
 # Output: [1->1->2->3->4->4->5->6]
 
 # Definition for singly-linked list.
+import heapq
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -20,8 +22,8 @@ class LinkedList:
     def __init__(self):
         self.head = None
 
-    def add(self, data):
-        new_node = ListNode(data)
+    def append(self, val):
+        new_node = ListNode(val)
         if self.head is None:
             self.head = new_node
         else:
@@ -34,27 +36,26 @@ class LinkedList:
         result = []
         current = self.head
         while current:
-            result.add(str(current.data))
+            result.append(str(current.val))
             current = current.next
         return ' -> '.join(result)
 
 def mergeLists(lists):
-    import heapq
     heap = []
-    
-    for i, node in enumerate(lists):
-        if node:
-            heapq.heappush(heap, (node.val, i, node))
+
+    for list in lists:
+        if list.head:
+            heapq.heappush(heap, (list.head.val, id(list.head), list.head))
     
     temp = ListNode(0)
     current = temp
     
     while heap:
-        val, i, node = heapq.heappop(heap)
+        val, _, node = heapq.heappop(heap)
         current.next = node
         current = current.next
-        if current.next:
-            heapq.heappush(heap, (current.next.val, i, current.next))
+        if node.next:
+            heapq.heappush(heap, (node.next.val, id(node.next), node.next))
     
     return temp.next
 
@@ -69,8 +70,8 @@ if __name__ == "__main__":
             numbers = list(map(int, line.split()))
             linked_list = LinkedList()
             for number in numbers:
-                linked_list.add(number)
-            list.append(linked_list)
+                linked_list.append(number)
+            lists.append(linked_list)
         except ValueError:
             print("Invalid input. Please enter integers separated by spaces.")
     
