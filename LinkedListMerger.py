@@ -16,6 +16,28 @@ class ListNode:
         self.val = val
         self.next = next
 
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def add(self, data):
+        new_node = ListNode(data)
+        if self.head is None:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = new_node
+
+    def __str__(self):
+        result = []
+        current = self.head
+        while current:
+            result.add(str(current.data))
+            current = current.next
+        return ' -> '.join(result)
+
 def mergeLists(lists):
     import heapq
     heap = []
@@ -47,8 +69,8 @@ if __name__ == "__main__":
             numbers = list(map(int, line.split()))
             linked_list = LinkedList()
             for number in numbers:
-                linked_list.append(number)
-            rows.append(linked_list)
+                linked_list.add(number)
+            list.append(linked_list)
         except ValueError:
             print("Invalid input. Please enter integers separated by spaces.")
     
