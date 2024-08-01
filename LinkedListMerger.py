@@ -32,14 +32,6 @@ class LinkedList:
                 current = current.next
             current.next = new_node
 
-    def __str__(self):
-        result = []
-        current = self.head
-        while current:
-            result.append(str(current.val))
-            current = current.next
-        return ' -> '.join(result)
-
 def mergeLists(lists):
     heap = []
 
